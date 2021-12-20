@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 // 排除空和undefined  但是注意要去除掉0
 export const isFalsy = (value) => {
   return value === 0 ? false : !value;
@@ -13,4 +15,25 @@ export const cleanObject = (object) => {
     }
   });
   return result;
+};
+
+export const useMount = (callback) => {
+  useEffect(() => {
+    callback();
+  }, []);
+};
+
+export const useDebounce = (value, delay) => {
+  const [debounceValue, setDebounceValue] = useState(value);
+  useEffect(() => {
+    // 每次在value变化时，设置一个定时器
+    const timeout = setTimeout(() => {
+      setDebounceValue(value);
+    }, delay);
+    // 每次在上一个useEffect处理完之后再运行
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [delay, value]);
+  return debounceValue;
 };
