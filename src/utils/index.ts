@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 // 排除空和undefined  但是注意要去除掉0
-export const isFalsy = (value: any) => {
+export const isFalsy = (value: unknown) => {
   return value === 0 ? false : !value;
 };
 // 删除对象中属性值为空的项
@@ -25,7 +25,7 @@ export const useMount = (callback: () => void) => {
   }, []);
 };
 
-export const useDebounce = (value: any, delay?: number) => {
+export const useDebounce = <T>(value: T, delay?: number) => {
   const [debounceValue, setDebounceValue] = useState(value);
   useEffect(() => {
     // 每次在value变化时，设置一个定时器
